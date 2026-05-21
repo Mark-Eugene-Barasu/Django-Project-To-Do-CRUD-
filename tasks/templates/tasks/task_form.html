@@ -1,0 +1,46 @@
+{% extends 'tasks/base.html' %}
+
+{% block title %}{% if mode == 'create' %}New Task{% else %}Edit Task{% endif %}{% endblock %}
+
+{% block content %}
+  <div class="card">
+    <h2 style="margin:0 0 0.5rem 0;">
+      {% if mode == 'create' %}✨ Create a task{% else %}✏️ Edit task{% endif %}
+    </h2>
+    <div class="tiny">
+      {% if mode == 'create' %}Type a title and press Create.{% else %}Update details and press Save.{% endif %}
+    </div>
+
+    <div style="height: 1rem;"></div>
+
+    <form method="post">
+      {% csrf_token %}
+
+      <div class="field">
+        {{ form.title.label_tag }}
+        {{ form.title }}
+        {% if form.title.errors %}
+          <div style="color: var(--danger); font-weight:700; margin-top:0.25rem;">{{ form.title.errors }}</div>
+        {% endif %}
+      </div>
+
+      <div class="field">
+        <label style="display:flex; gap:0.5rem; align-items:center;">
+          {{ form.completed }}
+          {{ form.completed.label_tag }}
+        </label>
+        {% if form.completed.errors %}
+          <div style="color: var(--danger); font-weight:700; margin-top:0.25rem;">{{ form.completed.errors }}</div>
+        {% endif %}
+      </div>
+
+      <div class="actions">
+        <button class="btn btn-primary" type="submit">
+          {% if mode == 'create' %}✅ Create{% else %}💾 Save{% endif %}
+        </button>
+        <a class="btn" href="{% if mode == 'create' %}{% url 'tasks:task_list' %}{% else %}{% url 'tasks:task_detail' task.pk %}{% endif %}">↩️ Cancel</a>
+      </div>
+    </form>
+  </div>
+{% endblock %}
+
