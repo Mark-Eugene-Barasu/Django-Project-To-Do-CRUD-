@@ -1,3 +1,5 @@
+https://djangoprojectcodecollege.netlify.app/
+
 # Django Project — To-Do CRUD
 
 This project implements a simple CRUD To-Do application in Django.
